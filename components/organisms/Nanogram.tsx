@@ -1,25 +1,37 @@
 import * as React from 'react'
+import { useRecoilValue } from 'recoil'
 
-import { Grid } from '../molecules/Grid'
+import { sizeSelector } from '../../recoil/selectos/size'
+
+import { Grid, GridRow, GridCol } from '../molecules/Grid'
 import { Cell } from '../molecules/Cell'
 
 type Props = {}
 
 export const Nanogram = React.memo((props: Props) => {
+  const size = useRecoilValue(sizeSelector)
+
   return (
     <div>
-      <Grid
-        rows={50}
-        cols={50}
-        renderCell={(row, col) => {
+      <Grid>
+        {size.rows.map((row) => {
           return (
-            <Cell
-              key={`cell-${row}-${col}`}
-              state={col % 2 === 0 ? 'drawn' : 'space'}
-            />
+            <GridRow key={`row${row}`}>
+              {size.cols.map((col) => {
+                return (
+                  <GridCol key={`col${col}`}>
+                    <Cell
+                      row={row}
+                      col={col}
+                      state="blank"
+                    />
+                  </GridCol>
+                )
+              })}
+            </GridRow>
           )
-        }}
-      />
+        })}
+      </Grid>
     </div>
   )
 })

@@ -1,5 +1,9 @@
 import * as React from 'react'
+import { useCallback } from 'react'
 import styled from 'styled-components'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+
+import { activeCellState } from '../../recoil/atoms/activeCell';
 
 import { IconTimes } from '../atoms/icons/IconTimes'
 
@@ -18,12 +22,29 @@ const Container = styled.div<ContainerProps>`
 `
 
 type Props = {
+  row: number
+  col: number
   state: 'blank' | 'drawn' | 'space'
 }
 
 export const Cell = React.memo((props: Props) => {
+  // const activeCell = useRecoilValue(activeCellState)
+  const setActiveCell = useSetRecoilState(activeCellState)
+
+  const handleMouseEnter = useCallback(() => {
+    setActiveCell(() => {
+      return {
+        row: props.row,
+        col: props.col
+      }
+    })
+  }, [props.row, props.col])
+
   return (
-    <Container drawn={props.state === 'drawn'}>
+    <Container
+      drawn={props.state === 'drawn'}
+      onMouseEnter={handleMouseEnter}
+    >
       {props.state === 'space' && (
         <IconTimes />
       )}
