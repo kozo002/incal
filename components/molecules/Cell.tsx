@@ -19,6 +19,7 @@ const Container = styled.div<ContainerProps>`
   font-size: 9px;
   line-height: 1;
   background-color: ${props => props.drawn ? '#5f5f5f' : '#fff'};
+  opacity: 0.6;
 `
 
 type Props = {
@@ -40,10 +41,15 @@ export const Cell = React.memo((props: Props) => {
     })
   }, [props.row, props.col])
 
+  const handleClick = useCallback(() => {
+    console.log('click')
+  }, [])
+
   return (
     <Container
       drawn={props.state === 'drawn'}
       onMouseEnter={handleMouseEnter}
+      onClick={handleClick}
     >
       {props.state === 'space' && (
         <IconTimes />
