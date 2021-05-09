@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useMemo, useCallback } from 'react'
 import styled from 'styled-components'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 
 import { activeLinesVisibilityState } from '../../recoil/atoms/activeLinesVisibility'
 import { activeCellState } from '../../recoil/atoms/activeCell'
@@ -48,7 +48,6 @@ const ColCell = styled.div`
 export const ColHints = React.memo((props: {
   length: number
 }) => {
-  const [activeCell] = useRecoilState(activeCellState)
   const setActiveCell = useSetRecoilState(activeCellState)
   const setActiveLinesVisivility = useSetRecoilState(activeLinesVisibilityState)
 
@@ -65,7 +64,7 @@ export const ColHints = React.memo((props: {
       }
     })
     return { cols, mouseEnterCallbacks }
-  }, [props.length, activeCell, setActiveCell])
+  }, [props.length, setActiveCell])
 
   const handleContainerMouseEnter = useCallback(() => {
     setActiveLinesVisivility(true)
