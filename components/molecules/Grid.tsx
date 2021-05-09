@@ -1,19 +1,20 @@
 import * as React from 'react'
+import type { ReactNode } from 'react'
 import styled from 'styled-components'
 
 const borderColor = '#ccc'
+const emphasizedBorderColor = '#999'
+
+const emphasizingCount = 5
+
 const Table = styled.table`
   border: 1px solid ${borderColor};
   border-collapse: collapse;
 `
-const Td = styled.td`
-  padding: 0;
-  width: 10px;
-  height: 10px;
-  border: 1px solid ${borderColor};
-`
 
-export const Grid: React.FC = (props) => {
+export const Grid = React.memo((props: {
+  children: ReactNode
+}) => {
   return (
     <Table>
       <tbody>
@@ -21,20 +22,29 @@ export const Grid: React.FC = (props) => {
       </tbody>
     </Table>
   )
-}
+})
 
-export const GridRow: React.FC = (props) => {
-  return (
-    <tr>
-      {props.children}
-    </tr>
-  )
-}
+export const GridRow = styled.tr`
+  &:nth-child(${emphasizingCount}n+0) > td {
+    border-bottom: 1px solid ${emphasizedBorderColor};
+  }
+  &:last-child > td {
+    border-bottom: none;
+  }
+`
 
-export const GridCol: React.FC = (props) => {
-  return (
-    <Td>
-      {props.children}
-    </Td>
-  )
-}
+export const GridCol = styled.td`
+  padding: 0;
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid ${borderColor};
+  border-left: 1px solid ${borderColor};
+  border-right: none;
+
+  &:nth-child(${emphasizingCount}n+0) {
+    border-right: 1px solid ${emphasizedBorderColor};
+  }
+  &:last-child {
+    border-right: none;
+  }
+`

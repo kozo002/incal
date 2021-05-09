@@ -1,19 +1,27 @@
-import { useRecoilValue } from 'recoil'
+import styled from 'styled-components'
 
-import { activeCellState } from '../recoil/atoms/activeCell'
-
-import { ActiveLines } from '../components/molecules/activeLines'
 import { Nanogram } from '../components/organisms/Nanogram'
 
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
+const Center = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`
+
 export default function Home() {
-  const activeCell = useRecoilValue(activeCellState)
 
   return (
-    <div>
-      <ActiveLines>
+    <Wrapper>
+      <Center>
         <Nanogram />
-      </ActiveLines>
-      {activeCell.row}, {activeCell.col}
-    </div>
+      </Center>
+    </Wrapper>
   )
 }

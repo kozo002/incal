@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useCallback } from 'react'
 import styled from 'styled-components'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 
 import { activeCellState } from '../../recoil/atoms/activeCell';
 
