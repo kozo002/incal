@@ -1,10 +1,12 @@
 import * as React from 'react'
-import { useState, useCallback } from 'react'
+import { useCallback } from 'react'
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
+import { activeLinesVisibilityState } from '../../recoil/atoms/activeLinesVisibility'
 import { activeCellState } from '../../recoil/atoms/activeCell'
 import { sizeState } from '../../recoil/atoms/size'
+import variables from '../../styles/variables.json'
 
 const Container = styled.div`
   position: relative;
@@ -14,21 +16,21 @@ const lineCommonStyle = `
   position: absolute;
   z-index: 1;
   opacity: 0.25;
-  background-color: blue;
+  background-color: rgba(0,0,255,.5);
 `
 
 const YLine = styled.div`
   ${lineCommonStyle}
-  top: 0;
-  width: 10px;
-  height: 100%;
+  bottom: 0;
+  width: ${variables.cell.size}px;
+  height: calc(100% + 2000px);
 `
 
 const XLine = styled.div`
   ${lineCommonStyle}
-  left: 0;
-  width: 100%;
-  height: 10px;
+  right: 0;
+  width: calc(100% + 2000px);
+  height: ${variables.cell.size}px;
 `
 
 const GridContainer = styled.div`
@@ -41,20 +43,21 @@ type Props = {}
 export const ActiveLines: React.FC<Props> = (props) => {
   const activeCell = useRecoilValue(activeCellState)
   const size = useRecoilValue(sizeState)
-  const [isVisible, setVisible] = useState(false)
+  const isVisible = useRecoilValue(activeLinesVisibilityState)
+  const setActiveLinesVisibility = useSetRecoilState(activeLinesVisibilityState)
 
   const handleMouseEnter = useCallback(() => {
-    setVisible(true)
+    setActiveLinesVisibility(true)
   }, [])
 
   const handleMouseLeave = useCallback(() => {
-    setVisible(false)
+    setActiveLinesVisibility(false)
   }, [])
 
   return (
-    <Container style={{ width: `${size.cols * 10}px` }}>
-      {isVisible && <YLine style={{ left: `${activeCell.col * 10}px` }} />}
-      {isVisible && <XLine style={{ top: `${activeCell.row * 10}px` }} />}
+    <Container style={{ width: `${size.cols * variables.cell.size}px` }}>
+      {isVisible && activeCell.col !== undefined && <YLine style={{ left: `${activeCell.col * variables.cell.size}px` }} />}
+      {isVisible && activeCell.row !== undefined && <XLine style={{ top: `${activeCell.row * variables.cell.size}px` }} />}
       <GridContainer
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

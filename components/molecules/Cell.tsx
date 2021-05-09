@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useSetRecoilState } from 'recoil'
 
 import { activeCellState } from '../../recoil/atoms/activeCell';
+// import variables from '../../styles/variables.json'
 
 import { IconTimes } from '../atoms/icons/IconTimes'
 

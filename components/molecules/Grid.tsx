@@ -2,6 +2,8 @@ import * as React from 'react'
 import type { ReactNode } from 'react'
 import styled from 'styled-components'
 
+import variales from '../../styles/variables.json'
+
 const borderColor = '#ccc'
 const emphasizedBorderColor = '#999'
 
@@ -35,8 +37,8 @@ export const GridRow = styled.tr`
 
 export const GridCol = styled.td`
   padding: 0;
-  width: 10px;
-  height: 10px;
+  width: ${variales.cell.size}px;
+  height: ${variales.cell.size}px;
   border-top: 1px solid ${borderColor};
   border-left: 1px solid ${borderColor};
   border-right: none;
