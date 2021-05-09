@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { sizeSelector } from '../../recoil/selectors/size'
 
-import { ActiveLines } from '../molecules/activeLines'
+import { ActiveLines } from '../molecules/ActiveLines'
 import { Grid, GridRow, GridCol } from '../molecules/Grid'
 import { Cell } from '../molecules/Cell'
 import { ColHints } from '../molecules/ColHints'
